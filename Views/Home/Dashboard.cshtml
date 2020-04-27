@@ -1,0 +1,87 @@
+@{
+    ViewData["Title"] = "Dojo Activity Center";
+}
+@model User
+
+<style>
+    .container{
+        margin: 0 auto;
+    }
+    body{
+        background-image: url('~/img/CARD ORANGE.png');
+        background-color: #d7ddde;
+    }
+   nav{
+        padding: 0.5rem;
+        background: grey;
+        color: white;
+        margin-bottom: 1rem;
+    }
+    nav> h3, h4, a{
+        vertical-align: top;
+        display:inline-block;
+    }
+    h1{
+        text-align: center;
+    }
+    .logout{
+        line-height: 60px;
+        margin-left: 537px; 
+    }
+    a{
+        line-height: 60px;
+        margin-left: 30px; 
+    }
+</style>
+<nav>
+    <h3 class = "display-4">Dojo Activity Center</h3>
+    <a class = "logout" href="/logout">Logout</a>
+</nav>
+ <br>
+ <h1 class = "display-3"> Welcome @ViewBag.User.Name!</h1>
+ <br>
+<table class="table table-dark">
+  <thead>
+    <tr class = "text-center">
+      <th>Activity</th>
+      <th>Date and Time</th>
+      <th>Duration</th>
+      <th>Event Coordinator</th>
+      <th>No. of Participants</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+   <tbody>
+      @foreach(var party in ViewBag.Parties){
+        <tr >
+        @if(party.Date > DateTime.Now ){
+            <td><a href="/Party/@party.PartyId">@party.Title</a></td>
+            <td class = "text-center">@party.Date.ToString("MMM dd yyyy") & @party.Time.ToString("h:mm tt")</td>
+            <td class = "text-center">@party.Duration @party.DurationType</td>
+            <td class = "text-center">@party.Planner.Name</td>
+            <td class = "text-center">@party.Users.Count</td>
+            <td>
+                @if(ViewBag.UserId ==@party.PlannerId){
+                    <a href="/delete/@party.PartyId" class="btn btn-outline-danger">Delete</a>
+                }else{
+                    bool IsGoing = false;
+                    foreach(var guest in party.Users){
+                        if(guest.UserId == ViewBag.UserId){
+                            IsGoing=true;
+                        }
+                    }
+                    if (IsGoing){
+                        <a class="btn btn-outline-success" href="/leave/@party.PartyId">Leave</a>
+                    }else{
+                        <a class="btn btn-outline-primary" href="/join/@party.PartyId">Join</a>    
+                    }
+                }
+            </td>
+        }
+        </tr>
+      }
+  </tbody>
+</table>
+<div class = "text-right">
+    <a class="btn btn-outline-secondary" href="/NewParty">Add New Party</a>
+</div>

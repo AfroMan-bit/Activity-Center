@@ -1,0 +1,50 @@
+@model User
+
+<style>
+    span{
+        color: red;
+    }
+    .title{
+        width: 100%;
+        text-align: center;
+        @* background-color: white; *@
+        margin-top: -75px;
+        margin-bottom: 40px;
+    }
+    .register{
+        margin-top: 100px;
+        padding: 40px;
+        width: 500px;
+        display: inline-block;
+        @* border: 1px solid white; *@
+    }
+    .btn{
+        box-shadow: 3px 3px 3px #333;
+    }
+</style>
+
+<div class = "register">
+<h1 class = "display-4 title">Register Here!</h1>
+<form action="/register" method="post" class="form">
+    <label>User Name</label>
+    <input type="text" name="Name" class="form-control" placeholder = "Enter a name">
+    <p><span asp-validation-for="Name"></span></p>            
+
+    <label>Email</label>
+    <input type="text" name="Email" class="form-control" placeholder = "Enter a valid email">
+    <p><span asp-validation-for="Email"></span></p>
+            
+    <label>Password</label>
+    <input type="password" name="Password" class="form-control" placeholder = "Create a unique password">
+    <p style = "font-size: 0.8rem">* Password needs to be at least 8 characters</p>
+    <p><span asp-validation-for="Password"></span></p>
+
+    <label>Confirm Password</label>
+    <input type="password" name="Confirm" class="form-control" placeholder = "Make sure your passwords match..">
+    <p><span asp-validation-for="Confirm"></span></p>
+
+    <div class = "text-right">
+        <input type="submit" value="Register" class="btn btn-outline-primary"/>
+    </div>
+</form>
+</div>

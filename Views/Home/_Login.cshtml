@@ -1,0 +1,46 @@
+@model LoginUser
+
+<style>
+    body{
+        @* background-color: white; *@
+        @* background-image: ; *@
+    }
+    span{
+        color: red;
+    }
+     .title{
+        width: 100%;
+        text-align: center;
+        @* background-color: white; *@
+        margin-top: -75px;
+        margin-bottom: 40px;
+    }
+    .login{
+        margin-top: 100px;
+        padding: 40px;
+        width: 420px;
+        display: inline-block;
+        @* border: 1px solid white; *@
+    }
+    .btn{
+        box-shadow: 3px 3px 3px #333;
+    }
+</style>
+
+<div class = "login">
+<h3 class = "display-4 title">Login Here!</h3>
+<form action="/login" method="post" class="form">
+    
+        <label>Email</label>
+        <input type="text" name="LoginEmail" class="form-control" placeholder = "Enter your email">
+        <p><span asp-validation-for="LoginEmail"></span></p>
+    
+        <label>Password</label>
+        <input type="password" name="LoginPassword" class="form-control" placeholder = "Enter your password">
+        <p><span asp-validation-for="LoginPassword"></span></p>
+
+    <div class = "text-right">
+        <input type="submit" value="Login" class="btn btn-outline-success" />
+    </div>
+</form>
+</div>

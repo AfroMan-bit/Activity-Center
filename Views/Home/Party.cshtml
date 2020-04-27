@@ -1,0 +1,67 @@
+@{
+    ViewData["Title"] = "Activity";
+}
+
+@model Party
+<style>
+    .container{
+        margin: 0 auto;
+    }
+    body{
+        background-color: #d7ddde;
+        
+    }
+    nav{
+        padding: 0.5rem;
+        background: grey;
+        color: white;
+         margin-bottom: 1rem;
+    }
+    nav> h3, h4, a{
+        vertical-align: top;
+        display:inline-block;
+    }
+    .home{
+        line-height: 60px;
+        margin-left: 440px; 
+    }
+    a{
+        line-height: 60px;
+        margin-left: 50px; 
+    }
+</style>
+<nav>
+    <h3 class = "display-4">Dojo Activity Center</h3>
+    <a class = "home" href="/dashboard">Home</a> 
+    <a href="/logout">Logout</a>
+</nav>
+<br>
+<div class = "text-center">
+        <h1 class = "display-3">@ViewBag.Party.Title</h1>
+        <br>
+        <h3>Event Coordinator: @ViewBag.Party.Planner.Name</h3>
+        <h3>Description: @ViewBag.Party.Description</h3>
+        <h3>Participants: </h3>
+        @{
+            foreach(var each in ViewBag.Attendees.Users){ 
+                <li>@each.User.Name </li>
+            }
+         }
+</div>
+@{
+    @if(ViewBag.UserId == ViewBag.Party.PlannerId){
+        <a href="/delete/@ViewBag.Party.PartyId" class="btn text-right btn-outline-danger">Delete</a>
+    }else{
+        bool IsGoing = false;
+        foreach(var g in ViewBag.Party.Users){
+            if(g.UserId == ViewBag.UserId){
+                IsGoing=true;
+            }
+        }
+        if (IsGoing){
+            <a class="btn text-right btn-outline-success" href="/leave/@ViewBag.Party.PartyId">Leave</a>
+            }else{
+                <a class="btn text-right btn-outline-primary" href="/join/@ViewBag.Party.PartyId">Join</a>    
+            }
+        }
+}
